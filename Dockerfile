@@ -26,6 +26,7 @@ COPY . /var/www/dorcas-business-hub
 # Finish composer
 RUN composer dump-autoload --no-scripts --no-dev --optimize
 
+# File & Folder permissions
 RUN chown -R www-data:www-data /var/www/dorcas-business-hub/storage
 RUN chmod -R u=rwx,g=rwx,o=rwx /var/www/dorcas-business-hub/storage
 RUN chmod -R u=rwx,g=rwx,o=rwx /var/www/dorcas-business-hub/bootstrap/cache
