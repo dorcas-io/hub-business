@@ -49,12 +49,12 @@ return [
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
-            'prefix' => '',
+            'prefix' => env('DB_PREFIX', ''),
             'strict' => true,
             'engine' => null,
             'sslmode' => env('DB_SSLMODE', 'prefer'),
              'options' => env('DB_SSLMODE') === "require" ? array(
-                PDO::MYSQL_ATTR_SSL_CA => '/var/www/hub.dorcas.ng/BaltimoreCyberTrustRoot.crt.pem',
+                PDO::MYSQL_ATTR_SSL_CA => '/var/www/hub.dorcas.io/BaltimoreCyberTrustRoot.crt.pem',
             ) : [],  
 
         ],
@@ -73,7 +73,7 @@ return [
             'engine' => null,
             'sslmode' => 'require',
             'options' => env('DB_SSLMODE') === "require" ? array(
-                PDO::MYSQL_ATTR_SSL_CA => '/var/www/hub.dorcas.ng/BaltimoreCyberTrustRoot.crt.pem',
+                PDO::MYSQL_ATTR_SSL_CA => '/var/www/hub.dorcas.io/BaltimoreCyberTrustRoot.crt.pem',
             ) : [],  
         ],
 

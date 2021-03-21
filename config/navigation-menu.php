@@ -150,14 +150,5 @@ return [
         'clickable' => false,
         'navbar' => true,
         'sub-menu' => []
-    ],
-    'modules-analytics' => [
-      'icon' => 'fe fe-bookmark',
-      'dashboard' => 'all',
-      'title' => 'Analytics',
-      'route' => 'analytics-categories',
-      'clickable' => false,
-      'navbar' => true,
-      'sub-menu' => []
-    ],
+    ]
 ];

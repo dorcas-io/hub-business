@@ -6,23 +6,18 @@ npm-debug.log
 bootstrap/compiled.php
 app/storage/
 
-# Laravel 5 & Lumen specific
+composer-dev.txt
+composer-live.txt
+
 public/storage
 public/hot
 storage/*.key
 .env.*.php
 .env.php
 .env
-Homestead.yaml
-Homestead.json
-
-# Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
-.rocketeer/
 
 .DS_Store
-
+.DS_Store*
 composer.lock
-
-sftp-config.json
 
 .git

@@ -331,7 +331,7 @@ function get_dorcas_subdomain(\Hostville\Dorcas\Sdk $sdk = null)
                 return $sub->prefix === $domain;
             })->first();
             //$sudomain_url = $scheme . '://' . $subdomain->prefix;
-            $sudomain_url = $subdomain->prefix;
+            $sudomain_url = $subdomain->prefix ?? "";
         break;
         default:
             $subdomain = $subdomains->first();

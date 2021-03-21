@@ -21,7 +21,10 @@ class DockerProxyHandler
         $proxyENV = env('DEPLOY_ENV', "");
         if ($proxyENV == "docker") {
             $request->setTrustedProxies( [ $request->getClientIp() ], Request::HEADER_X_FORWARDED_ALL );
-        };
+        }
+        if ($proxyENV == "local") {
+            $request->setTrustedProxies( [ $request->getClientIp() ], Request::HEADER_X_FORWARDED_ALL );
+        }
         return $next($request);
     }
 

@@ -46,7 +46,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->middleware('guest');
+        $this->middleware(['guest','edition_multitenant_only'])->except(['installerRegistration','installerCreate']);
         $this->data['page']['title'] = 'Create an Account';
     }
 
@@ -55,6 +55,7 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm(Request $request)
     {
+
         $this->data['header']['title'] = 'Sign Up for an Account';
 
         $plans = $request->only(['starter', 'classic', 'premium']);
@@ -143,7 +144,7 @@ class RegisterController extends Controller
             'firstname' => 'required|string|max:30',
             'lastname' => 'required|string|max:30',
             'email' => 'required|string|email|max:80|unique:users',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string|min:8',
             'company' => 'nullable|max:100',
             'feature_select' => 'required|string|max:50',
             'phone' => 'required|numeric',
@@ -159,15 +160,12 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        //dd($request->all());
-
-
-        // event(new Registered($user = $this->create($request, $request->all())));
-         $user = $this->create($request, $request->all());
-         event(new Registered($user));
+        $user = $this->create($request, $request->all());
+        event(new Registered($user));
         $sdk = app(Sdk::class);
         $provider = new DorcasUserProvider($sdk);
         //dd($provider);
+
         # get the provider
         $dorcasUser = $provider->retrieveByCredentials(['email' => $user->email, 'password' => $request->password]);
 
@@ -217,7 +215,7 @@ class RegisterController extends Controller
         $response = create_account($sdk, $data);
         
         if (!$response->isSuccessful()) {
-            //dd($response);
+            //dd(array($request, $response));
             throw new \RuntimeException('Error while creating the Dorcas account: ' . $response->getErrors()[0]['title']);
             //throw new \RuntimeException($response->getErrors()[0]['title'] ?? 'Error while creating the Dorcas account!');
         }
