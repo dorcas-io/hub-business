@@ -18,4 +18,3 @@ storage/*.key
 
 .DS_Store
 .DS_Store*
-composer.lock
