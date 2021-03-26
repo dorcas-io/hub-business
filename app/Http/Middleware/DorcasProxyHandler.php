@@ -6,7 +6,7 @@ use Closure;
 use GuzzleHttp\Psr7\Uri;
 use Illuminate\Http\Request;
 
-class DockerProxyHandler
+class DorcasProxyHandler
 {
     /**
      * Handle an incoming request.
@@ -23,6 +23,9 @@ class DockerProxyHandler
             $request->setTrustedProxies( [ $request->getClientIp() ], Request::HEADER_X_FORWARDED_ALL );
         }
         if ($proxyENV == "local") {
+            $request->setTrustedProxies( [ $request->getClientIp() ], Request::HEADER_X_FORWARDED_ALL );
+        }
+        if ($proxyENV == "deploy") {
             $request->setTrustedProxies( [ $request->getClientIp() ], Request::HEADER_X_FORWARDED_ALL );
         }
         return $next($request);

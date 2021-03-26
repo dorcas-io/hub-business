@@ -61,7 +61,7 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            \App\Http\Middleware\DockerProxyHandler::class,
+            \App\Http\Middleware\DorcasProxyHandler::class,
             DorcasAuthViaUrlToken::class,
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
