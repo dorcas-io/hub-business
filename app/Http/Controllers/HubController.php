@@ -118,7 +118,7 @@ class HubController extends Controller
         //$company->id = 999999999;
         $company_id = 100006;
         # get the user
-        $resources = Cache::remember('mli_resources.'.$company_id, 1800, function () use ($resource_type) {
+        $resources = Cache::remember('mli_resources.'.$company_id, 30, function () use ($resource_type) {
             $response = ModulesLibraryResources::where([
             	['partner_id', '=', '0'],
             	['resource_type', '=', $resource_type]
@@ -177,7 +177,7 @@ class HubController extends Controller
         $partner_id = !empty($partner->id) ? $partner->id : 0;
         $company_id = !empty($company->id) ? $company->id : rand(2000000,3000000);
 
-        $resources = Cache::remember('mau_media.'.$company_id, 1800, function () use ($partner_id) {
+        $resources = Cache::remember('mau_media.'.$company_id, 30, function () use ($partner_id) {
             $response = collect(config('modules-auth.resources.media', []));
             return $response->map(function ($resource) {
                 return (object) $resource;

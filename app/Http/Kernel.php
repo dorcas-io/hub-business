@@ -106,5 +106,6 @@ class Kernel extends HttpKernel
         'require_role' => RequireRole::class,
         'edition_business_only' =>  \App\Http\Middleware\DorcasBusinessGateOnly::class,
         'edition_multitenant_only' =>  \App\Http\Middleware\DorcasMultiTenantGateOnly::class,
+        'edition_commercial_only' =>  \App\Http\Middleware\DorcasCommercialGateOnly::class,
     ];
 }
