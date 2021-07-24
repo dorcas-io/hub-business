@@ -4,7 +4,7 @@ on:
       branches: [ dev ]
 
 jobs:
-    deploy-lumen-to-ec2:
+    deploy-laravel-to-ec2:
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@master
@@ -13,12 +13,12 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: 'eu-west-2'
-          aws-security-group-id: 'sg-01f199aed78e7a25bss'
+          aws-region: 'eu-west-1'
+          aws-security-group-id: ${{ secrets.AWS_SECURITY_GROUP_ID_STAGING }}
           port: '22'
           protocol: 'tcp'
           description: 'GitHub Action Access (Staging)'
-      - name: Clear Out HubBusiness Directory
+      - name: Clear Out Hub Business Directory (Staging)
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST_STAGING_BUSINESS }}
@@ -27,7 +27,7 @@ jobs:
           port: ${{ secrets.PORT_STAGING_BUSINESS }}
           script: |
             sudo rm -rf ${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}/*
-      - name: Copy LMSBackend Files
+      - name: Copy Hub Business Directory (Staging)
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOST_STAGING_BUSINESS }}
