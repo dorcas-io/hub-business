@@ -14,7 +14,11 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: 'eu-west-2'
+<<<<<<< HEAD
           aws-security-group-id: ${{ secrets.AWS_SECRET_SECURITY_GROUP_ID_STAGING }}
+=======
+          aws-security-group-id: 'sg-01f199aed78e7a25bs'
+>>>>>>> 601f846ba95a87b5e82b7037429142ebf7ec4772
           port: '22'
           protocol: 'tcp'
           description: 'GitHub Action Access (Staging)'
