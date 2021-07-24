@@ -14,7 +14,10 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: 'eu-west-2'
+          aws-security-group-id: ${{ secrets.AWS_SECRET_SECURITY_GROUP_STAGING }}
           port: '22'
+          protocol: 'tcp'
+          description: 'GitHub Action Access (Staging)'
       - name: Clear Out Hub Directory
         uses: appleboy/ssh-action@master
         with:
