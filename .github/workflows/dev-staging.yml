@@ -15,6 +15,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: 'eu-west-2'
           port: '22'
+      - name: Clear Out Hub Directory
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST_STAGING_BUSINESS }}
