@@ -1,7 +1,7 @@
 name: Hub_DeployDevToStaging
 on:
     push:
-      branches: [ dev ]
+      branches: [ staging ]
 
 jobs:
     deploy-laravel-to-ec2:
@@ -47,7 +47,7 @@ jobs:
           port: ${{ secrets.PORT_STAGING_BUSINESS }}
 
           script: |
-            cp /var/www/staging-files/.env-business-hub ${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}/.env
+            cp /var/www/deploy-files/.env-business-hub-staging ${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}/.env
             cd ${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}
             composer install --optimize-autoloader --no-dev
             php artisan optimize
