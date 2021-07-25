@@ -1,0 +1,25 @@
+# PHP Specific Files
+vendor/
+
+# NodeJS Specific Files
+node_modules/
+npm-debug.log
+
+# Laravel Specific Files
+bootstrap/compiled.php
+app/storage/
+
+composer-dev.txt
+composer-live.txt
+
+public/storage
+public/hot
+storage/*.key
+.env.*.php
+.env.php
+.env
+
+.DS_Store
+.DS_Store*
+
+# Dorcas Specific Files
