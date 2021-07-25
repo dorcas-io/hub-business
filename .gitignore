@@ -1,8 +1,11 @@
+# PHP Specific Files
 vendor/
+
+# NodeJS Specific Files
 node_modules/
 npm-debug.log
 
-# Laravel 4 specific
+# Laravel Specific Files
 bootstrap/compiled.php
 app/storage/
 
@@ -18,3 +21,5 @@ storage/*.key
 
 .DS_Store
 .DS_Store*
+
+# Dorcas Specific Files
