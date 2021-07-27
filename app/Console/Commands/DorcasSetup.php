@@ -41,7 +41,7 @@ class DorcasSetup extends Command
     {
         if (empty($options)) {
             // default setup
-            $database = env('DB_DATABASE', "");
+            $database = getenv('DB_DATABASE');
 
             if (!$database) {
                 $this->info('Skipping creation of database as env(DB_DATABASE) is empty');
@@ -51,17 +51,23 @@ class DorcasSetup extends Command
             try {
                 //putenv ("CUSTOM_VARIABLE=hero");
 
-                //Connecting to MySQL
-                $pdo = DB::connection()->getPdo();
+                $conn = mysqli_connect(getenv('DB_HOST'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'));
+
+                if (!$conn) {
+                  die("Connection failed: " . mysqli_connect_error());
+                }
                 
-                //Creating the Database
-                $pdo->exec(sprintf(
-                    'CREATE DATABASE IF NOT EXISTS %s ;', $database
-                ));
+                // Create database
+                $sql = "CREATE DATABASE IF NOT EXISTS `" . getenv('DB_DATABASE') . "`";
+                if (mysqli_query($conn, $sql)) {
+                  $this->info(sprintf('Successfully created %s database', $database));
+                } else {
+                  $this->error(sprintf('Error creating %s database, %s', $database, mysqli_error($conn)));
+                }
+                
+                mysqli_close($conn);
     
-                $this->info(sprintf('Successfully created %s database', $database));
-    
-            } catch (PDOException $exception) {
+            } catch (Exception $exception) {
                 $this->error(sprintf('Failed to create %s database, %s', $database, $exception->getMessage()));
             }
         }
