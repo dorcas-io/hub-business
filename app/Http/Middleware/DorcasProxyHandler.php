@@ -28,6 +28,12 @@ class DorcasProxyHandler
         if ($proxyENV == "deploy") {
             $request->setTrustedProxies( [ $request->getClientIp() ], Request::HEADER_X_FORWARDED_ALL );
         }
+        if ($proxyENV == "staging") {
+            $request->setTrustedProxies( [ $request->getClientIp() ], Request::HEADER_X_FORWARDED_ALL );
+        }
+        if ($proxyENV == "production") {
+            $request->setTrustedProxies( [ $request->getClientIp() ], Request::HEADER_X_FORWARDED_ALL );
+        }
         return $next($request);
     }
 

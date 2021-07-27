@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@dorcas.ng'),
+        'address' => env('MAIL_FROM_ADDRESS', 'support@dorcas.io'),
         'name' => env('MAIL_FROM_NAME', 'Dorcas Hub'),
     ],
 
