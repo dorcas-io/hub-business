@@ -1,4 +1,4 @@
-name: Hub_DeployDevToStaging
+name: Hub_DeployToStaging
 on:
     push:
       branches: [ staging ]
