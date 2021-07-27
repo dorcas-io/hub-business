@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputArgument;
 
 use Illuminate\Support\Facades\DB;
 
@@ -13,7 +15,7 @@ class DorcasSetup extends Command
      *
      * @var string
      */
-    protected $signature = 'dorcas:setup';
+    protected $signature = 'dorcas:setup {--database=}';
 
     /**
      * The console command description.
@@ -49,7 +51,8 @@ class DorcasSetup extends Command
 
 
         // default setup
-        $database = $this->option('database');;
+        $database = $this->option('database');
+        $database = getenv('DB_DATABASE');
 
         if (!$database) {
             $this->info('Skipping creation of database as env(DB_DATABASE) is empty');
@@ -66,7 +69,7 @@ class DorcasSetup extends Command
             }
             
             // Create database
-            $sql = "CREATE DATABASE IF NOT EXISTS `" . getenv('DB_DATABASE') . "`";
+            $sql = "CREATE DATABASE IF NOT EXISTS `" . $database . "`";
             if (mysqli_query($conn, $sql)) {
                 $this->info(sprintf('Successfully created %s database', $database));
             } else {
@@ -80,4 +83,5 @@ class DorcasSetup extends Command
             }
 
     }
+
 }
