@@ -51,6 +51,7 @@ jobs:
             cd ${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}
             composer install --optimize-autoloader --no-dev
             php artisan optimize
+            php artisan key:generate
             sudo chown -R $USER:www-data ${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}/storage
             sudo chown -R $USER:www-data ${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}/bootstrap/cache
             sudo chmod -R 775 ${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}/storage
