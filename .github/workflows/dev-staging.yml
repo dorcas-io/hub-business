@@ -63,4 +63,3 @@ jobs:
             sudo chmod u=rwx,g=rx,o=x ${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}/artisan
             find "${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}" -type f -name '*.php' -exec chmod 644 {} \;
             php artisan dorcas:setup
-            php artisan migrate --seed --force
