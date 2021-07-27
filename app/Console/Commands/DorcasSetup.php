@@ -41,7 +41,7 @@ class DorcasSetup extends Command
     {
         if (empty($options)) {
             // default setup
-            $database = env('DB_DATABASE', false);
+            $database = env('DB_DATABASE', "business-hub");
 
             if (!$database) {
                 $this->info('Skipping creation of database as env(DB_DATABASE) is empty');
