@@ -42,7 +42,7 @@ class DorcasSetup extends Command
     public function handle($options = "")
     {
 
-        $this->info('Starting Dorcas (HUB) Setup...');
+        $this->info('Starting Dorcas (HUB) Setup ...');
 
         // $value = $this->argument('name');
         // // and
