@@ -42,6 +42,8 @@ class DorcasSetup extends Command
     public function handle($options = "")
     {
 
+        $this->info('Starting Dorcas (HUB) Setup...');
+
         // $value = $this->argument('name');
         // // and
         // $value = $this->option('name');
@@ -49,37 +51,50 @@ class DorcasSetup extends Command
         // $arguments = $this->argument();
         // $options = $this->option();
 
+        $firstTime = getenv('INSTALLED_HUB')=="false" || getenv('INSTALLED_HUB')==false ? true : false;
+
 
         // DATABASE CREATION AND IMPORT MOVED TO CORE DORCAS SETUP COMMAND
 
-        $this->info('Writing OAuth Client Details to .env');
-        try {
-            $client = DB::connection('core_mysql')->table("oauth_clients")->where('password_client', 1)->first();
-            $client_id = $client->id;
-            $client_secret = $client->secret;
+        if ($firstTime) {
 
-            $this->info(' ID: ' . $client_id . " / Secret: " . $client_secret);
+            $this->info('Checking / Writing OAuth Client Details to .env');
+            try {
+                $client = DB::connection('core_mysql')->table("oauth_clients")->where('password_client', 1)->first();
+                $client_id = $client->id;
+                $client_secret = $client->secret;
+    
+                $this->info(' ID: ' . $client_id . " / Secret: " . $client_secret);
+    
+                $path = base_path('.env');
+                if (file_exists($path)) {
+                    file_put_contents($path, str_replace(
+                        'DORCAS_CLIENT_ID=', 'DORCAS_CLIENT_ID='.$client_id, file_get_contents($path)
+                    ));
+                    file_put_contents($path, str_replace(
+                        'DORCAS_CLIENT_SECRET=', 'DORCAS_CLIENT_SECRET='.$client_secret, file_get_contents($path)
+                    ));
+                    file_put_contents($path, str_replace(
+                        'DORCAS_PERSONAL_CLIENT_ID=', 'DORCAS_PERSONAL_CLIENT_ID='.$client_id, file_get_contents($path)
+                    ));
+                    file_put_contents($path, str_replace(
+                        'DORCAS_PERSONAL_CLIENT_SECRET=', 'DORCAS_PERSONAL_CLIENT_SECRET='.$client_secret, file_get_contents($path)
+                    ));
+                    $this->info('Successfully written Client ID & Secret to .env');
 
-            $path = base_path('.env');
-            if (file_exists($path)) {
-                file_put_contents($path, str_replace(
-                    'DORCAS_CLIENT_ID=', 'DORCAS_CLIENT_ID='.$client_id, file_get_contents($path)
-                ));
-                file_put_contents($path, str_replace(
-                    'DORCAS_CLIENT_SECRET=', 'DORCAS_CLIENT_SECRET='.$client_secret, file_get_contents($path)
-                ));
-                file_put_contents($path, str_replace(
-                    'DORCAS_PERSONAL_CLIENT_ID=', 'DORCAS_PERSONAL_CLIENT_ID='.$client_id, file_get_contents($path)
-                ));
-                file_put_contents($path, str_replace(
-                    'DORCAS_PERSONAL_CLIENT_SECRET=', 'DORCAS_PERSONAL_CLIENT_SECRET='.$client_secret, file_get_contents($path)
-                ));
-                $this->info('Successfully written Client ID & Secret to .env');
+
+                    file_put_contents($path, str_replace(
+                        'INSTALLED_HUB=false', 'INSTALLED_HUB=true', file_get_contents($path)
+                    ));
+                    $this->info('Completed first time .env setup');
+                }
+    
+    
+            } catch (Exception $exception) {
+                $this->error(sprintf('Failed setting up OAuth: %s', $exception->getMessage()));
             }
 
 
-        } catch (Exception $exception) {
-            $this->error(sprintf('Failed setting up OAuth: %s', $exception->getMessage()));
         }
 
 
