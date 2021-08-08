@@ -50,37 +50,48 @@ class DorcasSetup extends Command
         // $options = $this->option();
 
 
-        // default setup
-        $database = $this->option('database');
-        $database = getenv('DB_DATABASE');
+        // DATABASE CREATION AND IMPORT MOVED TO CORE DORCAS SETUP COMMAND
 
-        if (!$database) {
-            $this->info('Skipping creation of database as env(DB_DATABASE) is empty');
-            return;
-        }
-
+        $this->info('Writing OAuth Client Details to .env');
         try {
-            //putenv ("CUSTOM_VARIABLE=hero");
+            $client = DB::connection('core_mysql')::table("oauth_clients")->where('password_client', 1)->first();
+            $client_id = $client->id;
+            $client_secret = $client->secret;
 
-            $conn = mysqli_connect(getenv('DB_HOST'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'));
+            $this->info(' ID: ' . $client_id . " / Secret: " . $client_secret);
 
-            if (!$conn) {
-                die("Connection failed: " . mysqli_connect_error());
+            $path = base_path('.env');
+            if (file_exists($path)) {
+                file_put_contents($path, str_replace(
+                    'DORCAS_CLIENT_ID=', 'DORCAS_CLIENT_ID='.$client_id, file_get_contents($path)
+                ));
+                file_put_contents($path, str_replace(
+                    'DORCAS_CLIENT_SECRET=', 'DORCAS_CLIENT_SECRET='.$client_secret, file_get_contents($path)
+                ));
+                file_put_contents($path, str_replace(
+                    'DORCAS_PERSONAL_CLIENT_ID=', 'DORCAS_PERSONAL_CLIENT_ID='.$client_id, file_get_contents($path)
+                ));
+                file_put_contents($path, str_replace(
+                    'DORCAS_PERSONAL_CLIENT_SECRET=', 'DORCAS_PERSONAL_CLIENT_SECRET='.$client_secret, file_get_contents($path)
+                ));
+                $this->info('Successfully written Client ID & Secret to .env');
             }
-            
-            // Create database
-            $sql = "CREATE DATABASE IF NOT EXISTS `" . $database . "`";
-            if (mysqli_query($conn, $sql)) {
-                $this->info(sprintf('Successfully created %s database', $database));
-            } else {
-                $this->error(sprintf('Error creating %s database, %s', $database, mysqli_error($conn)));
-            }
-            
-            mysqli_close($conn);
+
 
         } catch (Exception $exception) {
-            $this->error(sprintf('Failed to create %s database, %s', $database, $exception->getMessage()));
-            }
+            $this->error(sprintf('Failed setting up OAuth: %s', $exception->getMessage()));
+        }
+
+        $this->info('Creating Laravel App Key...');
+        $key = \Illuminate\Support\Str::random(32);
+        $path = base_path('.env');
+        if (file_exists($path)) {
+            file_put_contents($path, str_replace(
+                'APP_KEY=', 'APP_KEY='.$key, file_get_contents($path)
+            ));
+            $this->info('Successfully written App Key to .env');
+        }
+
 
     }
 
