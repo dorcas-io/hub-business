@@ -54,7 +54,7 @@ class DorcasSetup extends Command
 
         $this->info('Writing OAuth Client Details to .env');
         try {
-            $client = DB::connection('core_mysql')::table("oauth_clients")->where('password_client', 1)->first();
+            $client = DB::connection('core_mysql')->table("oauth_clients")->where('password_client', 1)->first();
             $client_id = $client->id;
             $client_secret = $client->secret;
 
@@ -80,16 +80,6 @@ class DorcasSetup extends Command
 
         } catch (Exception $exception) {
             $this->error(sprintf('Failed setting up OAuth: %s', $exception->getMessage()));
-        }
-
-        $this->info('Creating Laravel App Key...');
-        $key = \Illuminate\Support\Str::random(32);
-        $path = base_path('.env');
-        if (file_exists($path)) {
-            file_put_contents($path, str_replace(
-                'APP_KEY=', 'APP_KEY='.$key, file_get_contents($path)
-            ));
-            $this->info('Successfully written App Key to .env');
         }
 
 
