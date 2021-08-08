@@ -54,7 +54,7 @@ class DorcasSetup extends Command
 
         $this->info('Writing OAuth Client Details to .env');
         try {
-            $client = DB::table("oauth_clients")->where('password_client', 1)->first();
+            $client = DB::connection('core_mysql')::table("oauth_clients")->where('password_client', 1)->first();
             $client_id = $client->id;
             $client_secret = $client->secret;
 
