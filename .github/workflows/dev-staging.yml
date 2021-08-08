@@ -57,9 +57,9 @@ jobs:
             sudo chmod -R 775 ${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}/storage
             sudo chmod -R 775 ${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}/bootstrap/cache
             sudo chmod -R u=rwx,g=rwx,o=rw ${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}/storage/logs
-            touch ${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}/storage/logs/lumen.log && > ${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}/storage/logs/lumen.log
-            sudo chown $USER:www-data ${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}/storage/logs/lumen.log
-            sudo chmod u=rwx,g=rw,o=rw ${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}/storage/logs/lumen.log
+            touch ${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}/storage/logs/laravel.log && > ${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}/storage/logs/laravel.log
+            sudo chown $USER:www-data ${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}/storage/logs/laravel.log
+            sudo chmod u=rwx,g=rw,o=rw ${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}/storage/logs/laravel.log
             sudo chmod u=rwx,g=rx,o=x ${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}/artisan
             find "${{ secrets.APPDIR_STAGING_BUSINESS_HUB }}" -type f -name '*.php' -exec chmod 644 {} \;
             php artisan config:clear
